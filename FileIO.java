@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class FileIO {
     public ArrayList<Player> readTeamFile(String filename) {
@@ -54,3 +54,4 @@ public class FileIO {
         }
     }
 }
+

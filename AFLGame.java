@@ -5,6 +5,7 @@ public class AFLGame {
     private Team teamB;
     private RandomNumberGenerator random;
     private Validation validator;
+    private int eventsPerQuarter = 80;
 
     public AFLGame() {
         random = new RandomNumberGenerator();
@@ -14,8 +15,8 @@ public class AFLGame {
     public void startGame() {
         // Initialize teams
         FileIO fileIO = new FileIO();
-        ArrayList<Player> teamAPlayers = fileIO.readTeamFile("teamA.txt");
-        ArrayList<Player> teamBPlayers = fileIO.readTeamFile("teamB.txt");
+        ArrayList<Player> teamAPlayers = fileIO.readTeamFile("resource/teamA.txt");
+        ArrayList<Player> teamBPlayers = fileIO.readTeamFile("resource/teamB.txt");
 
         teamA = new Team("Team A", teamAPlayers);
         teamB = new Team("Team B", teamBPlayers);
@@ -73,7 +74,6 @@ public class AFLGame {
         Team firstPossession = (random.generateRandomNumber(1, 2) == 1) ? teamA : teamB;
         Player currentPlayer = firstPossession.getRandomPlayer("Midfielder");
 
-        int eventsPerQuarter = 80;
         for (int event = 0; event < eventsPerQuarter; event++) {
             if (currentPlayer == null) break;
 
@@ -132,16 +132,31 @@ public class AFLGame {
         Team currentTeam = (teamA.getPlayers().contains(currentPlayer)) ? teamA : teamB;
         Team opposingTeam = (currentTeam == teamA) ? teamB : teamA;
 
-        return switch (outcome) {
-            case "Goal" -> getRandomMidfielder(random.generateRandomNumber(1, 2) == 1 ? teamA : teamB);
-            case "Behind" -> opposingTeam.getRandomPlayer("Defender");
-            case "PassToForward" -> currentTeam.getRandomPlayer("Forward");
-            case "PassToMidfield" -> currentTeam.getRandomPlayer("Midfielder");
-            case "TurnoverForward" -> opposingTeam.getRandomPlayer("Forward");
-            case "TurnoverMidfielder" -> opposingTeam.getRandomPlayer("Midfielder");
-            case "TurnoverDefender" -> opposingTeam.getRandomPlayer("Defender");
-            default -> null;
-        };
+        switch (outcome) {
+            case "Goal":
+                System.out.println(currentPlayer.getName()+"Goal");
+                return getRandomMidfielder(random.generateRandomNumber(1, 2) == 1 ? teamA : teamB);
+            case "Behind":
+                System.out.println(currentPlayer.getName()+"Behind");
+                return opposingTeam.getRandomPlayer("Defender");
+            case "PassToForward":
+                System.out.println(currentPlayer.getName()+"PassToForward");
+                return currentTeam.getRandomPlayer("Forward");
+            case "PassToMidfield":
+                System.out.println(currentPlayer.getName()+"PassToMidfield");
+                return currentTeam.getRandomPlayer("Midfielder");
+            case "TurnoverForward":
+                System.out.println(currentPlayer.getName()+"TurnoverForward");
+                return opposingTeam.getRandomPlayer("Forward");
+            case "TurnoverMidfielder":
+                System.out.println(currentPlayer.getName()+"TurnoverMidfielder");
+                return opposingTeam.getRandomPlayer("Midfielder");
+            case "TurnoverDefender":
+                System.out.println(currentPlayer.getName()+"TurnoverDefender");
+                return opposingTeam.getRandomPlayer("Defender");
+            default:
+                return null;
+        }
     }
 
     private void handleInjury(Player player) {
@@ -173,3 +188,4 @@ public class AFLGame {
         game.startGame();
     }
 }
+//System.out.println("Current working directory: " + System.getProperty("user.dir"));

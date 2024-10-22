@@ -9,6 +9,7 @@ public class Player {
     private int goals;
     private int behinds;
     private int effectiveDisposals;
+    private String setPosition;
 
     public Player(String name, String position, int seasonGoals) {
         this.name = name;
@@ -35,28 +36,39 @@ public class Player {
     public int getBehinds() { return behinds; }
     public int getEffectiveDisposals() { return effectiveDisposals; }
 
-    public void setStarPlayer(boolean starPlayer) { this.isStarPlayer = starPlayer; }
-    public void setInjured(boolean injured) { this.isInjured = injured; }
-    public void setReported(boolean reported) { this.isReported = reported; }
+    public void setPosition(String position) {this.setPosition = position;}
+    public void setStarPlayer ( boolean starPlayer){
+        this.isStarPlayer = starPlayer;
+    }
+    public void setInjured ( boolean injured){
+        this.isInjured = injured;
+    }
+    public void setReported ( boolean reported){
+        this.isReported = reported;
+    }
 
-    public void addKick() { this.kicks++; }
-    public void addGoal() {
+    public void addKick () {
+        this.kicks++;
+    }
+    public void addGoal () {
         this.goals++;
         this.seasonGoals++;
         this.effectiveDisposals++;
     }
-    public void addBehind() {
+    public void addBehind () {
         this.behinds++;
         this.effectiveDisposals++;
     }
-    public void addEffectiveDisposal() { this.effectiveDisposals++; }
+    public void addEffectiveDisposal () {
+        this.effectiveDisposals++;
+    }
 
-    public double getEffectiveDisposalPercentage() {
+    public double getEffectiveDisposalPercentage () {
         if (kicks == 0) return 0;
         return (effectiveDisposals * 100.0) / kicks;
     }
 
-    public void setPosition(String position) {
+    public String getSetPosition() {
+        return setPosition;
     }
 }
-
